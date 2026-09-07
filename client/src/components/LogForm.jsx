@@ -44,7 +44,7 @@ export default function LogForm({
     event.preventDefault();
     onSave({
       ...form,
-      date: toIsoDate(form.date),
+      date: toIsoDate(form.date) || toIsoDate(selectedDate),
       hours: Number(form.hours),
     });
   }
