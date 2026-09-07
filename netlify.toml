@@ -1,7 +1,6 @@
 [build]
-  base = "client"
-  command = "cd .. && npm install && rm -f client/pnpm-lock.yaml && npm install --prefix client && npm run build --prefix client"
-  publish = "dist"
+  command = "npm install && rm -f client/pnpm-lock.yaml && npm install --prefix client && npm run build --prefix client"
+  publish = "client/dist"
   functions = "netlify/functions"
 
 [build.environment]
@@ -9,7 +8,7 @@
 
 [functions]
   node_bundler = "nft"
-  included_files = ["../server/**"]
+  included_files = ["server/**"]
 
 [[redirects]]
   from = "/api/*"

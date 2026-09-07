@@ -1,6 +1,6 @@
 const serverless = require("serverless-http");
-const { connectDb } = require("../../../server/db");
-const { createApp } = require("../../../server/app");
+const { connectDb } = require("../../server/db");
+const { createApp } = require("../../server/app");
 
 const app = createApp();
 const handle = serverless(app);
