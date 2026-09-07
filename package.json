@@ -1,0 +1,23 @@
+{
+  "name": "consistency-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GitHub-style study consistency tracker",
+  "scripts": {
+    "dev": "concurrently -n api,web -c cyan,green \"npm run server\" \"npm run client\"",
+    "server": "node server/index.js",
+    "client": "npm run dev --prefix client",
+    "build": "npm run build --prefix client",
+    "start": "node server/index.js",
+    "install:all": "pnpm install && pnpm install --prefix client"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
+    "express": "^5.1.0",
+    "mongoose": "^9.9.5"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
