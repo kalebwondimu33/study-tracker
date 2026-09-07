@@ -10,7 +10,19 @@ async function ensureSettings() {
 }
 
 async function connectDb() {
-  const uri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/study-tracker";
+  if (mongoose.connection.readyState === 1) return;
+  if (mongoose.connection.readyState === 2) {
+    await mongoose.connection.asPromise();
+    return;
+  }
+
+  const uri =
+    process.env.MONGODB_URI ||
+    (process.env.NETLIFY ? "" : "mongodb://127.0.0.1:27017/study-tracker");
+  if (!uri) {
+    throw new Error("MONGODB_URI is not set. Add it in Netlify Site settings → Environment variables.");
+  }
+
   mongoose.set("strictQuery", true);
   await mongoose.connect(uri);
   await ensureSettings();

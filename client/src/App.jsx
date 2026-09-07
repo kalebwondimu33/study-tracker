@@ -131,7 +131,7 @@ export default function App() {
       <main className="app">
         <section className="card heatmap-card">
           <h1>Could not load the tracker</h1>
-          <p className="muted">{loadError}. Start the Node API with `npm run server` and refresh.</p>
+          <p className="muted">{loadError}</p>
         </section>
       </main>
     );
