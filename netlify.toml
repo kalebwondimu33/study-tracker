@@ -1,5 +1,5 @@
 [build]
-  command = "npm install && rm -f client/pnpm-lock.yaml && npm install --prefix client && npm run build --prefix client"
+  command = "corepack enable && corepack prepare pnpm@10.11.0 --activate && pnpm install && pnpm --dir client install && pnpm --dir client run build"
   publish = "client/dist"
   functions = "netlify/functions"
 

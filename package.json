@@ -9,7 +9,8 @@
     "client": "npm run dev --prefix client",
     "build": "npm run build --prefix client",
     "start": "node server/index.js",
-    "install:all": "pnpm install && pnpm install --prefix client"
+    "install:all": "pnpm install && pnpm install --prefix client",
+    "build:netlify": "pnpm install && pnpm --dir client install && pnpm --dir client run build"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -20,5 +21,6 @@
   },
   "devDependencies": {
     "concurrently": "^9.1.2"
-  }
+  },
+  "packageManager": "pnpm@10.11.0"
 }
