@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { weekdayShort } from "../utils";
+import { toIsoDate, weekdayShort } from "../utils";
 
 const EMPTY = {
   date: "",
@@ -24,7 +24,7 @@ export default function LogForm({
   useEffect(() => {
     if (entry) {
       setForm({
-        date: entry.date,
+        date: toIsoDate(entry.date),
         hours: entry.hours,
         learned: entry.learned,
         status: entry.status,
@@ -32,7 +32,7 @@ export default function LogForm({
         answer: entry.answer,
       });
     } else {
-      setForm({ ...EMPTY, date: selectedDate, hours: defaultHours });
+      setForm({ ...EMPTY, date: toIsoDate(selectedDate), hours: defaultHours });
     }
   }, [entry, selectedDate, defaultHours]);
 
@@ -44,6 +44,7 @@ export default function LogForm({
     event.preventDefault();
     onSave({
       ...form,
+      date: toIsoDate(form.date),
       hours: Number(form.hours),
     });
   }
@@ -55,8 +56,8 @@ export default function LogForm({
           Date
           <input
             type="date"
-            value={form.date}
-            onChange={(event) => update("date", event.target.value)}
+            value={toIsoDate(form.date)}
+            onChange={(event) => update("date", toIsoDate(event.target.value))}
             required
           />
         </label>

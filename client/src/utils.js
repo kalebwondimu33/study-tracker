@@ -1,3 +1,21 @@
+export function toIsoDate(raw) {
+  const text = String(raw || "").trim();
+  const iso = text.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (iso) return `${iso[1]}-${iso[2]}-${iso[3]}`;
+
+  const slash = text.match(/^(\d{1,2})[/.](\d{1,2})[/.](\d{4})$/);
+  if (slash) {
+    const first = Number(slash[1]);
+    const second = Number(slash[2]);
+    const year = slash[3];
+    const pad = (value) => String(value).padStart(2, "0");
+    if (first > 12) return `${year}-${pad(second)}-${pad(first)}`;
+    return `${year}-${pad(first)}-${pad(second)}`;
+  }
+
+  return "";
+}
+
 export function todayKey(date = new Date()) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -6,7 +24,8 @@ export function todayKey(date = new Date()) {
 }
 
 export function parseDateKey(key) {
-  const [year, month, day] = key.split("-").map(Number);
+  const iso = toIsoDate(key);
+  const [year, month, day] = iso.split("-").map(Number);
   return new Date(year, month - 1, day);
 }
 

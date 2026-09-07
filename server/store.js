@@ -73,8 +73,26 @@ function computeStreaks(entries) {
   return { currentStreak, longestStreak };
 }
 
+function toIsoDate(raw) {
+  const text = String(raw || "").trim();
+  const iso = text.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (iso) return `${iso[1]}-${iso[2]}-${iso[3]}`;
+
+  const slash = text.match(/^(\d{1,2})[/.](\d{1,2})[/.](\d{4})$/);
+  if (slash) {
+    const first = Number(slash[1]);
+    const second = Number(slash[2]);
+    const year = slash[3];
+    const pad = (value) => String(value).padStart(2, "0");
+    if (first > 12) return `${year}-${pad(second)}-${pad(first)}`;
+    return `${year}-${pad(first)}-${pad(second)}`;
+  }
+
+  return "";
+}
+
 function normalizeEntry(payload, existing = {}) {
-  const date = String(payload.date || existing.date || "").slice(0, 10);
+  const date = toIsoDate(payload.date || existing.date);
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
     throw new Error("A valid date is required.");
   }
